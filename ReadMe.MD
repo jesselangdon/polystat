@@ -2,7 +2,7 @@
 
 ## Summary
 
-Summarize Rasters is a tool within PolyStat Tools, which is an ArcGIS Python toolbox.  The Summarize Rasters tool take a polygon feature class, overlay the feature class on one or more raster datasets, and summarize the values associated with the raster grid cells intersecting each polygon.  These summarized values are then  joined to the attribute table of the feature class as new fields, with each field representing the values from a summarized raster dataset.
+Summarize Rasters is a tool within PolyStat Tools, which is an ArcGIS Python toolbox.  The Summarize Rasters tool take a polygon feature class, overlays the feature class on one or more raster datasets, and summarizes the values associated with the raster grid cells intersecting each polygon.  These summarized values are then joined to the attribute table of the feature class as a new field, with each field representing the values from a summarized raster dataset.
 
 This tool is written in Python, and uses ESRI's ArcPy package extensively.
 
