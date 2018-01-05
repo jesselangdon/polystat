@@ -1,4 +1,4 @@
-﻿# file name:	polystat.py
+﻿e# file name:	SummarizeRasters.py
 # author:		Jesse Langdon
 # dependencies: ESRI arcpy module, Spatial Analyst extension, custom functions
 

@@ -31,7 +31,11 @@ class summarizeRasters(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
         self.label = "Summarize Rasters"
-        self.description = "The Summarize Rasters tool takes any polygon dataset as an input, and statistically summarizes user-selected attributes per polygon feature for one or more raster datasets that intersect that polygon.  As an example, the user could specify a polygon dataset representing watersheds. The tool could calculate the mean elevation found within each watershed polygon, based on a spatially coincident digital elevation model."
+        self.description = "The Summarize Rasters tool takes any polygon dataset as an input, and statistically " \
+                           "summarizes user-selected attributes per polygon feature for one or more raster datasets" \
+                           " that intersect that polygon.  As an example, the user could specify a polygon dataset" \
+                           " representing watersheds. The tool could calculate the mean elevation found within each" \
+                           " watershed polygon, based on a spatially coincident digital elevation model."
         self.canRunInBackground = True
 
     def getParameterInfo(self):
