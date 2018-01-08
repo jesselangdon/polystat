@@ -1,14 +1,15 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Name:        PolyStat Toolbox                                               #
-# Purpose:     Tools for summarizing raster data by a polygon dataset.        #
+# Name:        PolyStat Tools                                                 #
+# Purpose:     Tools for summarizing data by a polygon feature class.         #
 #                                                                             #
 # Author:      Jesse Langdon                                                  #
 #              Seattle, Washington                                            #
 #                                                                             #
 # Created:     2015-Oct-26                                                    #
-# Version:     0.1          Modified:                                         #
-# Copyright:   (c) Jesse Langdon 2015                                         #
-# License:                                                                    #
+# Version:     0.1                                                            #
+# Modified:    2018-Jan-5                                                     #
+# Copyright:   Jesse Langdon 2018                                             #
+# License:     MIT                                                            #
 #                                                                             #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #!/usr/bin/env python
@@ -24,10 +25,10 @@ class Toolbox(object):
         self.alias = "PolyStat Tools"
 
         # List of tool classes associated with this toolbox
-        self.tools = [summarizeRasters]
+        self.tools = [SummarizeRastersTool]
 
 
-class summarizeRasters(object):
+class SummarizeRastersTool(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
         self.label = "Summarize Rasters"
@@ -57,23 +58,30 @@ class summarizeRasters(object):
         param1.parameterDependencies = [param0.name]
 
         param2 = arcpy.Parameter(
-            displayName='Summary data list',
+            displayName='Do the input polygon features overlap (e.g. upstream catchments)?',
+            name='bool_overlap',
+            datatype='GPBoolean',
+            parameterType='Optional',
+            direction='Input')
+
+        param3 = arcpy.Parameter(
+            displayName='Summary parameter data list',
             name='stat_list',
             datatype='GPValueTable',
             parameterType='Required',
             direction='Input')
-        param2.columns = [['Raster Dataset','Raster Dataset'], ['GPString','Statistic Type'], ['GPString', 'Summary Field Name']]
-        param2.filters[1].type = 'ValueList'
-        param2.filters[1].list = ['MEAN', 'MAXIMUM', 'MINIMUM', 'RANGE', 'STD', 'SUM']
+        param3.columns = [['Raster Dataset','Raster Dataset'], ['GPString','Statistic Type'], ['GPString', 'Summary Field Name']]
+        param3.filters[1].type = 'ValueList'
+        param3.filters[1].list = ['MEAN', 'MAXIMUM', 'MINIMUM', 'RANGE', 'STD', 'SUM']
 
-        param3 = arcpy.Parameter(
+        param4 = arcpy.Parameter(
             displayName='Output feature class',
             name='out_fc',
             datatype='DEFeatureClass',
             parameterType='Required',
             direction='Output')
 
-        params = [param0, param1, param2, param3]
+        params = [param0, param1, param2, param3, param4]
         return params
 
     def isLicensed(self):
@@ -93,8 +101,34 @@ class summarizeRasters(object):
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
+
+
+
         ps.main(parameters[0].valueAsText,
                 parameters[1].valueAsText,
-                parameters[2].valueAsText,
-                parameters[3].valueAsText)
+                parameters[3].valueAsText,
+                parameters[4].valueAsText,
+                parameters[2].valueAsText)
+
         return
+
+# # TEST
+# def main():
+#     tool = SummarizeRastersTool()
+#     tool.execute(tool.getParameterInfo(), None)
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# # TEST
+# vt = arcpy.ValueTable(3)
+# vt.addRow('C:\\JL\\Testing\\polystat\\input\\elev10m_lemhi.tif MEAN elev_mean')
+# vt.addRow('C:\\JL\\Testing\\polystat\\input\\nbcd_baw.tif MAXIMUM veg_max')
+#
+# in_poly = r"C:\JL\Testing\polystat\input\poly_overlap.shp"
+# zone_field = "LineOID"
+# bool_overlap = True
+# out_poly = r"C:\JL\Testing\polystat\input\test_overlap.shp"
+
+# ps.main(in_poly, zone_field, vt, out_poly, bool_overlap)
