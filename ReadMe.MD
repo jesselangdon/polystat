@@ -11,7 +11,7 @@ This tool is written in Python, and uses ESRI's ArcPy package extensively.
 
 ## Downloads
 
-[PolyStat Tools, v0.2](Downloads/PolyStat0.2.zip)
+[PolyStat Tools, v0.2](Downloads/PolyStat02.zip)
 
 ## Updates and Release Notes
 
