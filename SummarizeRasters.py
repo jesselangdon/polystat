@@ -2,17 +2,20 @@
 # Author:		Jesse Langdon
 # Revised:      1/5/2018
 # Dependencies: ESRI arcpy module, Spatial Analyst extension, custom functions
-# Version:      0.1
 
-import arcpy, os.path
+import gc
+import os.path
+import arcpy
 from arcpy.sa import *
 import polystat_util as u
+
 if arcpy.CheckExtension("SPATIAL") == "Available":
         arcpy.CheckOutExtension("SPATIAL")
 else:
     arcpy.AddError("PolyStat: Summarize Rasters tool requires Spatial Analyst. License currently unavailable.")
 
 arcpy.env.overwriteOutput = True
+gc.enable()
 
 # CONSTANTS
 summary_names = {} #There are a couple of inconsistencies with how ZonalStatistics fields
@@ -31,12 +34,17 @@ def calc_params(in_zone, zone_field, vt_array, param_count):
         stat_name = vt_array[j][1]
         field_name = vt_array[j][2]
         ras_lyr = arcpy.MakeRasterLayer_management(raster_name, "ras_lyr")
-        zstat_result = ZonalStatisticsAsTable(in_zone, zone_field, ras_lyr, r"in_memory\zstat_result",
-                                              "DATA", stat_name)
-        u.join_calc(in_zone, zone_field, field_name, zstat_result, summary_names[stat_name])
-        iter_count += 1
-        arcpy.AddMessage("%d of %d rasters processed..." % (iter_count, param_count))
-        del zstat_result
+        try:
+            zstat_result = ZonalStatisticsAsTable(in_zone, zone_field, ras_lyr, r"in_memory\zstat_result",
+                                               "DATA", stat_name)
+            u.join_calc(in_zone, zone_field, field_name, zstat_result, summary_names[stat_name])
+            iter_count += 1
+            arcpy.AddMessage("{0} of {1} rasters processed...".format(iter_count, param_count))
+            del zstat_result
+        except Exception as e:
+            arcpy.AddMessage("Problem summarizing for polygon feature {0}".format(in_zone))
+            arcpy.AddMessage(e)
+            continue
     return
 
 def main(in_fc, in_fc_join_field, param_tbl, out_fc, bool_overlap=False):

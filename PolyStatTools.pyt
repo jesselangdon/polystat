@@ -6,9 +6,9 @@
 #              Seattle, Washington                                            #
 #                                                                             #
 # Created:     2015-Oct-26                                                    #
-# Version:     0.1                                                            #
-# Modified:    2018-Jan-5                                                     #
-# Copyright:   Jesse Langdon 2018                                             #
+# Version:     0.2                                                            #
+# Modified:    2018-Jan-9                                                     #
+# Copyright:   Jesse Langdon, 2018                                            #
 # License:     MIT                                                            #
 #                                                                             #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -16,7 +16,7 @@
 
 # Import modules
 import arcpy
-import polystat as ps
+import SummarizeRasters as sr
 
 class Toolbox(object):
     def __init__(self):
@@ -102,9 +102,7 @@ class SummarizeRastersTool(object):
     def execute(self, parameters, messages):
         """The source code of the tool."""
 
-
-
-        ps.main(parameters[0].valueAsText,
+        sr.main(parameters[0].valueAsText,
                 parameters[1].valueAsText,
                 parameters[3].valueAsText,
                 parameters[4].valueAsText,
@@ -112,7 +110,6 @@ class SummarizeRastersTool(object):
 
         return
 
-# # TEST
 # def main():
 #     tool = SummarizeRastersTool()
 #     tool.execute(tool.getParameterInfo(), None)
@@ -121,7 +118,6 @@ class SummarizeRastersTool(object):
 #     main()
 
 
-# # TEST
 # vt = arcpy.ValueTable(3)
 # vt.addRow('C:\\JL\\Testing\\polystat\\input\\elev10m_lemhi.tif MEAN elev_mean')
 # vt.addRow('C:\\JL\\Testing\\polystat\\input\\nbcd_baw.tif MAXIMUM veg_max')
