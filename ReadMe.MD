@@ -11,9 +11,15 @@ This tool is written in Python, and uses ESRI's ArcPy package extensively.
 
 ## Downloads
 
-[PolyStat Tools, v0.2](Downloads/PolyStat02.zip)
+[PolyStat Tools, v0.3](Downloads/PolyStat03.zip)
 
 ## Updates and Release Notes
+
+1/16/2018
+* Release PolyStat Tool, v0.3
+    * Fixed bug with how overlapped polygons were being processed.
+    * Input polygon feature class can now be a layer.
+    * Included 'MAJORITY' as a summary statistic type.
 
 1/8/2018
 
