@@ -25,6 +25,7 @@ summary_names["MEAN"] = "MEAN"
 summary_names["RANGE"] = "RANGE"
 summary_names["STD"] = "STD"
 summary_names["SUM"] = "SUM"
+summary_names["MAJORITY"] = "MAJORITY"
 
 def calc_params(in_zone, zone_field, vt_array, param_count):
     # iterate through raster parameters and calculate zonal statistics
@@ -47,7 +48,7 @@ def calc_params(in_zone, zone_field, vt_array, param_count):
             continue
     return
 
-def main(in_fc, in_fc_join_field, param_tbl, out_fc, bool_overlap=False):
+def main(in_fc, in_fc_join_field, param_tbl, out_fc, bool_overlap):
     # extract values from value table
     param_str = str(param_tbl)
     param_rows = param_str.split(';')
@@ -69,7 +70,7 @@ def main(in_fc, in_fc_join_field, param_tbl, out_fc, bool_overlap=False):
     ply_tmp_lyr = "ply_tmp_lyr"
     arcpy.MakeFeatureLayer_management(ply_tmp, ply_tmp_lyr)
 
-    if bool_overlap == True:
+    if bool_overlap == 'true':
         # iterate through polygons if overlapping
         arcpy.AddMessage("Iterating through overlapping polygons...")
         with arcpy.da.SearchCursor(ply_tmp_lyr, [zone_field]) as cursor:

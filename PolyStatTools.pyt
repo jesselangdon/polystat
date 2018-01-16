@@ -6,7 +6,7 @@
 #              Seattle, Washington                                            #
 #                                                                             #
 # Created:     2015-Oct-26                                                    #
-# Version:     0.2                                                            #
+# Version:     0.3                                                            #
 # Modified:    2018-Jan-9                                                     #
 # Copyright:   Jesse Langdon, 2018                                            #
 # License:     MIT                                                            #
@@ -44,7 +44,7 @@ class SummarizeRastersTool(object):
         param0 = arcpy.Parameter(
             displayName='Input polygon feature class',
             name='in_ply',
-            datatype='Feature Class',
+            datatype='GPFeatureLayer',
             parameterType='Required',
             direction='Input')
         param0.filter.list = ['Polygon']
@@ -72,7 +72,7 @@ class SummarizeRastersTool(object):
             direction='Input')
         param3.columns = [['Raster Dataset','Raster Dataset'], ['GPString','Statistic Type'], ['GPString', 'Summary Field Name']]
         param3.filters[1].type = 'ValueList'
-        param3.filters[1].list = ['MEAN', 'MAXIMUM', 'MINIMUM', 'RANGE', 'STD', 'SUM']
+        param3.filters[1].list = ['MEAN', 'MAXIMUM', 'MINIMUM', 'RANGE', 'STD', 'SUM', 'MAJORITY']
 
         param4 = arcpy.Parameter(
             displayName='Output feature class',
